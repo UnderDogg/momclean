@@ -28,7 +28,7 @@ class EmailsEditRequest extends Request
     {
         return [
             'email_address' => 'email',
-            'email_name'    => 'required',
+            'email_name' => 'required',
             // 'department' => 'required',
             // 'priority' => 'required',
             // 'help_topic' => 'required',
@@ -36,10 +36,10 @@ class EmailsEditRequest extends Request
             'password' => 'required|min:6',
             // 'user_name' => 'required',
 
-            'fetching_host'          => 'required',
-            'fetching_port'          => 'required',
-            'fetching_encryption'    => 'required',
-            'fetching_protocol'      => 'required',
+            'fetching_host' => 'required',
+            'fetching_port' => 'required',
+            'fetching_encryption' => 'required',
+            'fetching_protocol' => 'required',
 
         ];
     }

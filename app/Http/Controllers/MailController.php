@@ -7,10 +7,11 @@ namespace App\Http\Controllers;
 use App\Attcahment as Attachment;
 use App\Emails;
 use App\Thread;
-// classes
 use Crypt;
 use ForceUTF8\Encoding;
 use PhpImap\Mailbox as ImapMailbox;
+
+// classes
 
 /**
  * ======================================
@@ -20,9 +21,29 @@ use PhpImap\Mailbox as ImapMailbox;
  *
  * @author Ladybird <info@ladybirdweb.com>
  */
-class MailController extends Controller {
+class MailController extends Controller
+{
 
-    public function readmails() {
+    public static function trim3D($html)
+    {
+        $body = str_replace('=3D', '', $html);
+        return $body;
+    }
+
+    public static function trimInjections(
+        $html,
+        $tags = ['<script>', '</script>', '<style>', '</style>', '<?php', '?>']
+    ) {
+        $replace = [];
+        foreach ($tags as $key => $tag) {
+            $replace[$key] = htmlspecialchars($tag);
+        }
+        $body = str_replace($tags, $replace, $html);
+        return $body;
+    }
+
+    public function readmails()
+    {
         $emails = Emails::get();
         // fetch each mails by mails
         foreach ($emails as $email) {
@@ -110,7 +131,8 @@ class MailController extends Controller {
                         $support = 'support';
                         $dir_img_paths = __DIR__;
                         $dir_img_path = explode('/code', $dir_img_paths);
-                        $filepath = explode('..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public', $attachment->filePath);
+                        $filepath = explode('..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public',
+                            $attachment->filePath);
                         $path = public_path() . $filepath[1];
                         $filesize = filesize($path);
                         $file_data = file_get_contents($path);
@@ -148,7 +170,7 @@ class MailController extends Controller {
                     $thread->body = $body;
                     $thread->save();
                 } else {
-                    
+
                 }
             }
         }
@@ -156,12 +178,25 @@ class MailController extends Controller {
         return redirect()->route('home');
     }
 
+    public static function trimTableTag($html)
+    {
+        $first_pos = strpos($html, '<table');
+        $fist_string = substr_replace($html, '', 0, $first_pos);
+        $last_pos = strrpos($fist_string, '</table>', -1);
+        $total = strlen($fist_string);
+        $diff = $total - $last_pos;
+        $str = substr_replace($fist_string, '', $last_pos, -1);
+        $final_str = str_finish($str, '</table>');
+        return $final_str;
+    }
+
     /**
      * fetch_attachments.
      *
      * @return type
      */
-    public function fetch_attachments() {
+    public function fetch_attachments()
+    {
         $uploads = Upload::all();
         foreach ($uploads as $attachment) {
             $image = @imagecreatefromstring($attachment->file);
@@ -181,7 +216,8 @@ class MailController extends Controller {
      *
      * @return type file
      */
-    public function get_data($id) {
+    public function get_data($id)
+    {
         $attachments = Attachment::where('id', '=', $id)->get();
         foreach ($attachments as $attachment) {
             header('Content-type: application/' . $attachment->type . '');
@@ -191,9 +227,11 @@ class MailController extends Controller {
         }
     }
 
-    public function readmails1() {
+    public function readmails1()
+    {
 
-        $mailbox = new ImapMailbox('{imap-mail.outlook.com:993/imap/ssl/novalidate-cert}INBOX', 'mdsarfraz1992@outlook.com', '786Saifu@', __DIR__);
+        $mailbox = new ImapMailbox('{imap-mail.outlook.com:993/imap/ssl/novalidate-cert}INBOX',
+            'mdsarfraz1992@outlook.com', '786Saifu@', __DIR__);
         //dd($mailbox);
         $msgnos = $mailbox->searchMailBox('ALL');
         $mailId = $msgnos[73];
@@ -207,31 +245,6 @@ class MailController extends Controller {
         $body = self::trimTableTag($html);
 
         // }
-    }
-
-    public static function trimTableTag($html) {
-        $first_pos = strpos($html, '<table');
-        $fist_string = substr_replace($html, '', 0, $first_pos);
-        $last_pos = strrpos($fist_string, '</table>', -1);
-        $total = strlen($fist_string);
-        $diff = $total - $last_pos;
-        $str = substr_replace($fist_string, '', $last_pos, -1);
-        $final_str = str_finish($str, '</table>');
-        return $final_str;
-    }
-
-    public static function trim3D($html) {
-        $body = str_replace('=3D', '', $html);
-        return $body;
-    }
-    
-    public static function trimInjections($html,$tags=['<script>','</script>','<style>','</style>','<?php','?>']){
-        $replace = [];
-        foreach($tags as $key=>$tag){
-            $replace[$key]  = htmlspecialchars($tag);   
-        }
-        $body = str_replace($tags, $replace, $html);
-        return $body;
     }
 
 }

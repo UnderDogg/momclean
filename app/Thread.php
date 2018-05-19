@@ -14,13 +14,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Thread extends Model
 {
-    protected $table = 'thread';
+    protected $table = 'email_threads';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'title', 'body',
+        'name',
+        'email',
+        'title',
+        'body',
     ];
 }

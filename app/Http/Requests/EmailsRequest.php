@@ -28,7 +28,7 @@ class EmailsRequest extends Request
     {
         return [
             'email_address' => 'required|email|unique:emails',
-            'email_name'    => 'required',
+            'email_name' => 'required',
             // 'department' => 'required',
             // 'priority' => 'required',
             // 'help_topic' => 'required',
@@ -38,10 +38,10 @@ class EmailsRequest extends Request
             // 'user_name' => 'required',
             // 'sending_host' => 'required',
             // 'sending_port' => 'required',
-           'fetching_host'          => 'required',
-           'fetching_port'          => 'required',
-           'fetching_encryption'    => 'required',
-           'fetching_protocol'      => 'required',
+            'fetching_host' => 'required',
+            'fetching_port' => 'required',
+            'fetching_encryption' => 'required',
+            'fetching_protocol' => 'required',
 //            'mailbox_protocol' => 'required',
         ];
     }

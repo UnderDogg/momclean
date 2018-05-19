@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 // Model
 use App\Emails;
-// Request
 use App\Http\Requests\DiagnosRequest;
+
+// Request
 
 /**
  * ======================================
@@ -15,14 +16,16 @@ use App\Http\Requests\DiagnosRequest;
  *
  * @author Ladybird <info@ladybirdweb.com>
  */
-class DiagnosticController extends Controller {
+class DiagnosticController extends Controller
+{
 
     /**
      * get the diagnostic page for email sending.
      *
      * @return type view
      */
-    public function getDiag(Emails $email) {
+    public function getDiag(Emails $email)
+    {
         try {
             $emails = $email->all();
 
@@ -37,7 +40,8 @@ class DiagnosticController extends Controller {
      *
      * @return type view
      */
-    public function postDiag(DiagnosRequest $request) {
+    public function postDiag(DiagnosRequest $request)
+    {
         try {
             $email_details = Emails::where('id', '=', $request->from)->first();
             if ($email_details->sending_protocol == 'mail') {

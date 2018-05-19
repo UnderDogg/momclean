@@ -4,10 +4,14 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "config": {
+        "preferred-install": "dist"
+    },
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "php-imap/php-imap": "~2.0",
+        "nwidart/laravel-modules": "~1.0",
         "neitanod/forceutf8": "dev-master",
         "phpmailer/phpmailer": "^5.2"
     },
@@ -33,23 +37,18 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "php -r \"copy('.env.example', '.env');\""
+
         ],
         "post-create-project-cmd": [
-            "php artisan key:generate"
+
         ],
         "post-install-cmd": [
-            "php artisan clear-compiled",
-            "php artisan optimize"
         ],
         "pre-update-cmd": [
-            "php artisan clear-compiled"
+
         ],
         "post-update-cmd": [
-            "php artisan optimize"
+
         ]
-    },
-    "config": {
-        "preferred-install": "dist"
     }
 }

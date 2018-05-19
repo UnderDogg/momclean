@@ -21,6 +21,11 @@ class Attcahment extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'thread_id', 'size', 'type', 'poster', 'file',
+        'name',
+        'thread_id',
+        'size',
+        'type',
+        'poster',
+        'file',
     ];
 }
